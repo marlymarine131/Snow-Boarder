@@ -11,6 +11,7 @@ public class PlayerRotation : MonoBehaviour
     [SerializeField] float bastSpeed = 2f;
     Rigidbody2D rb2d;
     SurfaceEffector2D serfaceEffector;
+    public bool canMove = true;
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
@@ -20,8 +21,12 @@ public class PlayerRotation : MonoBehaviour
 
     void Update()
     {
-        Rotation();
-        RespondToBoost();
+        if (canMove)
+        {
+            Rotation();
+            RespondToBoost();
+        }
+
     }
 
     private void RespondToBoost()
@@ -35,7 +40,7 @@ public class PlayerRotation : MonoBehaviour
             serfaceEffector.speed = bastSpeed;
         }
     }
-
+    public void disableControl() => canMove = false;
     private void Rotation()
     {
         if (Input.GetKey(KeyCode.LeftArrow))

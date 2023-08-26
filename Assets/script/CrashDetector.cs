@@ -7,15 +7,24 @@ using UnityEngine.SceneManagement;
 public class Crash : MonoBehaviour
 {
     [SerializeField] float delayTime = 2f;
+    [SerializeField] AudioClip crashSFX;
     [SerializeField] ParticleSystem crashSystem;
-    // Start is called before the first frame update
-    void OnTriggerEnter2D(Collider2D other) {
-        if(other.tag == "Ground"){
+
+    bool hasCrash = false;
+    void OnTriggerEnter2D(Collider2D other)
+    {
+
+        if (other.tag == "Ground" && !hasCrash)
+        {
+            FindObjectOfType<PlayerRotation>().disableControl();
             crashSystem.Play();
-            Invoke("ReloadScene",delayTime);            
+            hasCrash = true;
+            GetComponent<AudioSource>().PlayOneShot(crashSFX);
+            Invoke("ReloadScene", delayTime);
         }
     }
-    void ReloadScene(){
+    void ReloadScene()
+    {
         SceneManager.LoadScene(0);
     }
 }

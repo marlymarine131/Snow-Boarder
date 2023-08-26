@@ -11,7 +11,8 @@ public class finishLine : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.tag == "Player"){
             finishEffect.Play();
-            Invoke("ReloadScene",delayTime);      
+            GetComponent<AudioSource>().Play();     
+            Invoke("ReloadScene",delayTime); 
         }
     }
     void ReloadScene(){
